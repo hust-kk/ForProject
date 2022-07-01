@@ -1,24 +1,38 @@
----
 name: "\U0001F41B Bug or Crash Report"
 title: "bug: "
-about: Unexpected behavior with StoneDB.
-labels: ["A-bug"]
----
+description: Unexpected behavior with StoneDB.
+labels: ["bug"]
+body:
+  - type: textarea
+    attributes:
+      label: Describe the problem
+      placeholder: >
+        Please describe the problem you observed.
 
-**Describe the problem**
-<!-- Please describe the problem you observed. -->
+  - type: textarea
+    attributes:
+      label: Expected behavior
+      placeholder: >
+        Expected behavior you want to see.
 
-**Expected behavior**
-<!-- Expected behavior you want to see. -->
+  - type: textarea
+    attributes:
+      label: How To Reproduce
+      placeholder: >
+        Provide minimal steps to reproduce the behavior:
 
-**How To Reproduce**
-<!-- If possible, provide minimal steps to reproduce the behavior. -->
+  - type: textarea
+    attributes:
+      label: Environment
+      placeholder: >
+        Please describe your environment.
+        1. Server OS [e.g. Linux/MacOS/Distrib ...]
+        2. StoneDB Version [e.g. 1.0.x]
 
-**Environment**
-<!-- Please describe your environment.
- - Server OS [e.g. Linux/MacOS/Distrib ...]
- - StoneDB Version [e.g. 1.0.x] -->
-
-**Additional context**
-<!-- What was the impact? Add any other context about the problem here. -->
-
+  - type: checkboxes
+    attributes:
+      label: Are you interested in submitting a PR to solve the problem?
+      description: >
+        We are looking forward to working with you to make a better StoneDB community.
+      options:
+        - label: Yes, I will!
