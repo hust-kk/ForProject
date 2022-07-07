@@ -3,7 +3,7 @@ name: Developing
 on:
   push:
     branches-ignore:
-      - main
+      - mainx
     pull_request:
       paths-ignore:
         - 'docs/**'
