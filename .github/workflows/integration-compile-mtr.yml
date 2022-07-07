@@ -26,4 +26,36 @@ jobs:
       - name: install prerequisites
         run: |
           sudo apt-get update
+          
+      - name: install prerequisites
+        run: |
+          sudo git clone git@github.com:hustjieke/stonedb-libs.git
+          cd stonedb-libs
+          sudo tar -zxvf stonedb-boost.tar.gz
+          sudo tar -zxvf stonedb-gcc-rocksdb.tar.gz
+          sudo tar -zxvf stonedb-marisa.tar.gz
+          cd gcc7.3
+          sudo tar -zxvf bin.tar.gz
+          sudo tar -zxvf include.tar.gz
+          sudo tar -zxvf lib64.tar.gz
+          sudo tar -zxvf lib.tar.gz
+          sudo tar -zxvf share.tar.gz
+          cd libexec/gcc/x86_64-pc-linux-gnu/7.3.0
+          sudo tar -zxvf all.tar.gz
+          sudo tar -zxvf cc1plus.tar.gz
+          sudo tar -zxvf cc1.tar.gz
+          cd - && cd ..
+          sudo cp -r stonedb-boost /usr/local/stonedb-boost
+          sudo cp -r stonedb-gcc-rocksdb /usr/local/stonedb-gcc-rocksdb
+          sudo cp -r stonedb-marisa /usr/local/stonedb-marisa
+          sudo cp -r gcc7.3 /usr/local/gcc7.3
+          sudo rm /usr/bin/gcc
+          sudo ln -s /usr/local/gcc7.3/bin/gcc /usr/bin/gcc
+          sudo rm /usr/bin/g++
+          sudo ln -s /usr/local/gcc7.3/bin/g++ /usr/bin/g++
+          sudo rm /usr/bin/c++
+          sudo ln -s /usr/local/gcc7.3/bin/c++ /usr/bin/c++
+          gcc -v
+          
+          
 
