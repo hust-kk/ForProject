@@ -1,0 +1,23 @@
+queue_rules:
+  - name: shared_queue
+    conditions:
+      - "#approved-reviews-by>=1"
+
+pull_request_rules:
+  - name: put bug fix to queue on approval
+    conditions:
+      - "#approved-reviews-by>=1"
+      - label=bug
+      
+    actions:
+      queue:
+        name: shared_queue
+
+  - name: put other pr to queue
+    conditions:
+      - "#approved-reviews-by>=1"
+      - label!=bug
+
+    actions:
+      queue:
+        name: shared_queue
