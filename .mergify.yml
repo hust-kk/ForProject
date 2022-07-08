@@ -21,3 +21,36 @@ pull_request_rules:
     actions:
       queue:
         name: shared_queue
+  # if there is a conflict in a approved PR, ping the author.
+  - name: ping author if there is conflicts
+    conditions:
+      - conflict
+      - "#approved-reviews-by >= 2"
+    actions:
+      comment:
+        message: |
+          This pull request has merge conflicts, you should resolve it before merged. @{{author}} please update it :)
+          Try `@mergify update` or update manually.
+  - name: Welcome new contributor
+    conditions:
+      - author!=Mergify
+    actions:
+      comment:
+        message: |
+          Thanks for the contribution!
+          I have applied any labels matching special text in your PR Changelog.
+          Please review the labels and make any necessary changes.
+  - name: label on new feature
+    conditions:
+      - body~=- New Feature
+    actions:
+      label:
+        add:
+          - PR-feature
+  - name: label on bug fix
+    conditions:
+      - body~=- Bug Fix
+    actions:
+      label:
+        add:
+          - PR-bug
