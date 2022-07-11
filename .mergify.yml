@@ -4,24 +4,25 @@ queue_rules:
       - "#approved-reviews-by>=1"
 
 pull_request_rules:
-  - name: put bug fix to queue on approval
+  - name: put bug fix to merge queue on approval with high priority
     conditions:
       - "#approved-reviews-by>=1"
-      - label=bug
+      - label=A-bug
       
     actions:
       queue:
         name: shared_queue
 
-  - name: put other pr to queue
+  - name: put other pr to merge queue
     conditions:
       - "#approved-reviews-by>=1"
-      - label!=bug
+      - label!=A-bug
 
     actions:
       queue:
         name: shared_queue
-  # if there is a conflict in a approved PR, ping the author.
+        
+# if there is a conflict in a approved PR, ping the author.
   - name: ping author if there is conflicts
     conditions:
       - conflict
@@ -30,7 +31,9 @@ pull_request_rules:
       comment:
         message: |
           This pull request has merge conflicts, you should resolve it before merged. @{{author}} please update it :)
+
           Try `@mergify update` or update manually.
+
   - name: Welcome new contributor
     conditions:
       - author!=Mergify
@@ -39,18 +42,27 @@ pull_request_rules:
         message: |
           Thanks for the contribution!
           I have applied any labels matching special text in your PR Changelog.
+
           Please review the labels and make any necessary changes.
+
   - name: label on new feature
     conditions:
-      - body~= New Feature
+      - 'title~=^(feat)(\(.*\))?:'
     actions:
       label:
         add:
           - PR-feature
   - name: label on bug fix
     conditions:
-      - body~= Bug Fix
+      - 'title~=^(fix)(\(.*\))?:'
     actions:
       label:
         add:
           - PR-bug
+  - name: label on Documentation
+    conditions:
+      - 'title~=^(docs)(\(.*\))?:'
+    actions:
+      label:
+        add:
+          - PR-docs
