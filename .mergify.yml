@@ -2,26 +2,30 @@ queue_rules:
   - name: shared_queue
     conditions:
       - "#approved-reviews-by>=1"
+      - check-success=stonedb-build
 
 pull_request_rules:
-  - name: put bug fix to queue on approval
+  - name: put bug fix to merge queue on approval with high priority
     conditions:
       - "#approved-reviews-by>=1"
-      - label=bug
+      - check-success=stonedb-build
+      - label=A-bug
       
     actions:
       queue:
         name: shared_queue
 
-  - name: put other pr to queue
+  - name: put other pr to merge queue
     conditions:
       - "#approved-reviews-by>=1"
-      - label!=bug
+      - check-success=stonedb-build
+      - label!=A-bug
 
     actions:
       queue:
         name: shared_queue
-  # if there is a conflict in a approved PR, ping the author.
+        
+# if there is a conflict in a approved PR, ping the author.
   - name: ping author if there is conflicts
     conditions:
       - conflict
@@ -30,7 +34,9 @@ pull_request_rules:
       comment:
         message: |
           This pull request has merge conflicts, you should resolve it before merged. @{{author}} please update it :)
+
           Try `@mergify update` or update manually.
+
   - name: Welcome new contributor
     conditions:
       - author!=Mergify
@@ -39,18 +45,48 @@ pull_request_rules:
         message: |
           Thanks for the contribution!
           I have applied any labels matching special text in your PR Changelog.
+
           Please review the labels and make any necessary changes.
+
   - name: label on new feature
     conditions:
-      - body~= New Feature
+      - body~= - [x] New Feature
     actions:
       label:
         add:
           - PR-feature
   - name: label on bug fix
     conditions:
-      - body~= Bug Fix
+      - body~= - [x] Bug Fix
     actions:
       label:
         add:
           - PR-bug
+  - name: label on Documentation
+    conditions:
+      - body~= - [x] Documentation
+    actions:
+      label:
+        add:
+          - PR-docs
+  - name: label on Improvement
+    conditions:
+      - body~= - [x] Improvement
+    actions:
+      label:
+        add:
+          - PR-improvement
+  - name: label on Performance Improvement
+    conditions:
+      - body~= - [x] Performance Improvement
+    actions:
+      label:
+        add:
+          - PR-performance
+  - name: label on Build/Testing/CI/CD
+    conditions:
+      - body~= - [x] Build/Testing/CI/CD
+    actions:
+      label:
+        add:
+          - PR-testing
