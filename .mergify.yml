@@ -1,3 +1,9 @@
+queue_rules:
+  - name: shared_queue
+    conditions:
+      - "#approved-reviews-by>=2"
+      - check-success=stonedb-build
+
 pull_request_rules:
   - name: automatic merge of 🚑 hotfix (high priority)
     conditions:
@@ -5,8 +11,9 @@ pull_request_rules:
       - label=A-bug
     actions:
       queue:
-        method: squash
-        priority: high      
+        name: shared_queue
+        method: merge
+        priority: high   
         
   - name: automatic merge squash on website/docs(low priority)
     conditions:
@@ -14,7 +21,7 @@ pull_request_rules:
       - -files~=^(!?website/)
     actions:
       queue:
-      merge:
+        name: shared_queue
         method: squash
         priority: low
 
@@ -24,7 +31,7 @@ pull_request_rules:
       - label!=A-bug
     actions:
       queue:
-      merge:
+        name: shared_queue
         method: squash
         priority: medium
         
