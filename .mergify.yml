@@ -42,14 +42,14 @@ pull_request_rules:
           Please review the labels and make any necessary changes.
   - name: label on new feature
     conditions:
-      - body~=- New Feature
+      - body~= New Feature
     actions:
       label:
         add:
           - PR-feature
   - name: label on bug fix
     conditions:
-      - body~=- Bug Fix
+      - body~= Bug Fix
     actions:
       label:
         add:

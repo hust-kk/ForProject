@@ -17,6 +17,8 @@ on:
       - '**.md'
       - 'scripts/**'
       - 'install_scripts/**'
+      - '.mergify.yml'
+      - 'test.cpp'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event_name }}
