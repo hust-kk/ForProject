@@ -1,7 +1,7 @@
 queue_rules:
   - name: shared_queue
     conditions:
-      - "#approved-reviews-by>=2"
+      - "#approved-reviews-by>=1"
       - check-success=stonedb-build
 
 pull_request_rules:
@@ -13,7 +13,6 @@ pull_request_rules:
       queue:
         name: shared_queue
         method: merge
-        priority: high   
         
   - name: automatic merge squash on website/docs(low priority)
     conditions:
@@ -23,7 +22,6 @@ pull_request_rules:
       queue:
         name: shared_queue
         method: squash
-        priority: low
 
   - name: put other pr to merge queue
     conditions:
@@ -33,7 +31,6 @@ pull_request_rules:
       queue:
         name: shared_queue
         method: squash
-        priority: medium
         
 # if there is a conflict in a approved PR, ping the author.
   - name: ping author if there is conflicts
