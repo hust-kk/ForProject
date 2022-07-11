@@ -2,13 +2,11 @@ queue_rules:
   - name: shared_queue
     conditions:
       - "#approved-reviews-by>=1"
-      - check-success=stonedb-build
 
 pull_request_rules:
   - name: put bug fix to merge queue on approval with high priority
     conditions:
       - "#approved-reviews-by>=1"
-      - check-success=stonedb-build
       - label=A-bug
       
     actions:
@@ -18,7 +16,6 @@ pull_request_rules:
   - name: put other pr to merge queue
     conditions:
       - "#approved-reviews-by>=1"
-      - check-success=stonedb-build
       - label!=A-bug
 
     actions:
