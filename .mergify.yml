@@ -2,6 +2,11 @@ queue_rules:
   - name: shared_queue
     conditions:
       - "#approved-reviews-by>=1"
+      
+    actions:
+      merge:
+        method: squash
+      
 
 pull_request_rules:
   - name: put bug fix to merge queue on approval with high priority
