@@ -54,24 +54,25 @@ pull_request_rules:
 
           Please review the labels and make any necessary changes.
 
-  - name: label on new feature
+  # Assign pr label based of tags
+  - name: label on New Feature
     conditions:
-      - body~=(?m)^\[x\] New Feature
+      - 'title~=^(feat)(\(.*\))?:'
     actions:
       label:
         add:
           - PR-feature
-  - name: label on bug fix
+  - name: label on Bug Fix
     conditions:
-      - body~=(?m)^\[x\] Bug Fix
+      - 'title~=^(fix)(\(.*\))?:'
     actions:
       label:
         add:
           - PR-bug
-  - name: label on Documentation
+  - name: label on Refactor
     conditions:
-      - body~=(?m)^\[x\] Documentation
+      - 'title~=^(refactor)(\(.*\))?:'
     actions:
       label:
         add:
-          - PR-docs
+          - pr-refactor
