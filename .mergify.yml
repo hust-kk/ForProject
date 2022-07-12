@@ -11,7 +11,7 @@ pull_request_rules:
     actions:
       queue:
         name: shared_queue
-        method: merge
+        method: rebase
         
   - name: automatic merge squash on website/docs(low priority)
     conditions:
@@ -20,7 +20,7 @@ pull_request_rules:
     actions:
       queue:
         name: shared_queue
-        method: squash
+        method: rebase
 
   - name: put other pr to merge queue
     conditions:
@@ -29,7 +29,7 @@ pull_request_rules:
     actions:
       queue:
         name: shared_queue
-        method: squash
+        method: rebase
         
 # if there is a conflict in a approved PR, ping the author.
   - name: ping author if there is conflicts
@@ -56,21 +56,21 @@ pull_request_rules:
 
   - name: label on new feature
     conditions:
-      - body~=(?m)^\[X\] New Feature
+      - body~=(?m)^\[x\] New Feature
     actions:
       label:
         add:
           - PR-feature
   - name: label on bug fix
     conditions:
-      - body~=(?m)^\[X\] Bug Fix
+      - body~=(?m)^\[x\] Bug Fix
     actions:
       label:
         add:
           - PR-bug
   - name: label on Documentation
     conditions:
-      - body~=(?m)^\[X\] Documentation
+      - body~=(?m)^\[x\] Documentation
     actions:
       label:
         add:
