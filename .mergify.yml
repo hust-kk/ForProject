@@ -11,16 +11,16 @@ pull_request_rules:
     actions:
       queue:
         name: shared_queue
-        method: rebase
+        method: squash
         
   - name: automatic merge squash on website/docs(low priority)
     conditions:
       - "#approved-reviews-by>=1"
-      - -files~=^(!?website/)
+      - -files~=^(website/)
     actions:
       queue:
         name: shared_queue
-        method: rebase
+        method: squash
 
   - name: put other pr to merge queue
     conditions:
@@ -29,7 +29,7 @@ pull_request_rules:
     actions:
       queue:
         name: shared_queue
-        method: rebase
+        method: squash
         
 # if there is a conflict in a approved PR, ping the author.
   - name: ping author if there is conflicts
