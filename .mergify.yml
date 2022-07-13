@@ -4,19 +4,11 @@ queue_rules:
       - "#approved-reviews-by>=1"
 
 pull_request_rules:
-  - name: automatic merge of 🚑 hotfix (high priority)
+  - name: automatic merge of hotfix (high priority)
     conditions:
       - "#approved-reviews-by>=1"
       - label=A-bug
-    actions:
-      queue:
-        name: shared_queue
-        method: squash
-        
-  - name: automatic merge squash on website/docs(low priority)
-    conditions:
-      - "#approved-reviews-by>=1"
-      - -files~=^(website/)
+      - check-success=stonedb-build
     actions:
       queue:
         name: shared_queue
@@ -26,6 +18,7 @@ pull_request_rules:
     conditions:
       - "#approved-reviews-by>=1"
       - label!=A-bug
+      - check-success=stonedb-build
     actions:
       queue:
         name: shared_queue
@@ -69,10 +62,38 @@ pull_request_rules:
       label:
         add:
           - PR-bug
+  - name: label on docs
+    conditions:
+      - 'title~=^(docs)(\(.*\))?:'
+    actions:
+      label:
+        add:
+          - PR-docs
+  - name: label on style
+    conditions:
+      - 'title~=^(style)(\(.*\))?:'
+    actions:
+      label:
+        add:
+          - PR-style
   - name: label on Refactor
     conditions:
       - 'title~=^(refactor)(\(.*\))?:'
     actions:
       label:
         add:
-          - pr-refactor
+          - PR-refactor
+  - name: label on test
+    conditions:
+      - 'title~=^(test)(\(.*\))?:'
+    actions:
+      label:
+        add:
+          - PR-testing
+  - name: label on chore
+    conditions:
+      - 'title~=^(chore)(\(.*\))?:'
+    actions:
+      label:
+        add:
+          - PR-chore
